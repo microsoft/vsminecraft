@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugClient|X86' ">
+    <StartAction>Class</StartAction>
+    <StartClass>GradleStart</StartClass>
+    <StartProgram />
+    <StartBrowserUrl />
+    <CmdArgs>
+    </CmdArgs>
+    <WorkingDirectory>bin\</WorkingDirectory>
+    <UseRemoteMachine>False</UseRemoteMachine>
+    <RemoteMachineName />
+    <DebugJvmArguments>-Xincgc -Xmx512M -Xms512M -Dfile.encoding=Cp1252 GradleStart</DebugJvmArguments>
+    <DebugAgentArguments />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugServer|X86' ">
+    <StartAction>Class</StartAction>
+    <StartClass>GradleStart</StartClass>
+    <StartProgram />
+    <StartBrowserUrl />
+    <CmdArgs>
+    </CmdArgs>
+    <WorkingDirectory>bin\</WorkingDirectory>
+    <UseRemoteMachine>False</UseRemoteMachine>
+    <RemoteMachineName />
+    <DebugJvmArguments>-Xincgc -Xmx512M -Xms512M -Dfile.encoding=Cp1252 GradleStart</DebugJvmArguments>
+    <DebugAgentArguments />
+  </PropertyGroup>
+</Project>

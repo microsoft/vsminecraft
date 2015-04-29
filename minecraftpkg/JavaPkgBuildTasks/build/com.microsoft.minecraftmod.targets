@@ -1,0 +1,47 @@
+<!-- Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the MIT License.  See LICENSE file in the project root for license information. -->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <UsingTask TaskName="JavaPkgBuildTasks.ReadJarReferences" AssemblyFile="JavaPkgBuildTasks.dll" />
+
+  <Target Name="MinecraftForgeSetup" BeforeTargets="PrepareForBuild" AfterTargets="GenerateJarReferences" Inputs="$(ProjectDir)build.gradle" Outputs="$(ProjectDir).classpath">
+    <Message Importance="high" Text="Setting up MinecraftForge workspace... (this may take a while but it's a one-time build)" />
+    <!-- Legal disclaimer; do not remove -->
+    <Message Importance="high" Text="Note: This extension will download and build third party packages. Each third party package is licensed to you by its owner. Microsoft is not responsible for, nor does it grant any licenses to, third-party packages. "/>
+    <Message Importance="high" Text="============================================================" />
+    <Exec StandardOutputImportance="high" Command="gradlew setupDecompWorkspace --refresh-dependencies" WorkingDirectory="$(ProjectDir)" />
+    <Message Importance="high" Text="Setting up Eclipse workspace..." />
+    <Message Importance="high" Text="============================================================" />
+    <Exec StandardOutputImportance="high" Command="gradlew eclipse" WorkingDirectory="$(ProjectDir)" />
+    <Message Importance="high" Text="Done!" />
+    <Message Importance="high" Text="============================================================" />
+  </Target> 
+  
+  <Target Name="ExtractJarReferences" BeforeTargets="GenerateJarReferences" Outputs="$(ProjectDir)classpath.vs.build.xml" Inputs="$(ProjectDir).classpath">
+    <Message Importance ="normal" Text="Reading jar references from Eclipse workspace..." />
+    <!-- <Exec 
+      WorkingDirectory="$(MSBuildThisFileDirectory)"
+      Command="java.exe -jar eclipse\plugins\$(EquinoxLauncherJarFileName) -consoleLog -console -nosplash -application javapkgbuild.runtask -data $(SolutionDir)\eclipse -exportReferences $(EclipseProjectName) $(ProjectDir)classpath.vs.build.xml" /> -->
+    <Copy SourceFiles="$(ProjectDir).classpath" DestinationFiles="$(ProjectDir)classpath.vs.build.xml" SkipUnchangedFiles="true" />
+  </Target>
+  
+  <Target Name="GenerateJarReferences" BeforeTargets="PrepareForBuild" Returns="@(JarReference)">
+    <Message Importance ="normal" Text="Generating Jar References for $(ProjectName)..."/>
+    
+    <ReadJarReferences
+       JarReferencesCacheFile = "$(ProjectDir)classpath.vs.build.xml"
+       FilterByType           = "lib">
+      <Output ItemName="__JarReferencesRead" TaskParameter="OutputJarReferences" />
+    </ReadJarReferences>
+
+    <Message Importance="high" Text="Importing references:" />
+    <Message Importance="high" Text="@(__JarReferencesRead)" />
+
+    <ItemGroup>
+      <JarReference Include="@(__JarReferencesRead)"> 
+        <IncludeInBuild>true</IncludeInBuild>
+        <Private>false</Private>
+      </JarReference>
+    </ItemGroup>
+  </Target>
+  
+</Project>

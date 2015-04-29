@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <Name>MinecraftForge Mod (Minecraft 1.7.10)</Name>
+    <Description>A project for creating a MinecraftForge-based Mod for Minecraft 1.7.10</Description>
+    <Icon>MinecraftModTemplate.ico</Icon>
+    <TemplateID>com.microsoft.MinecraftMod.1.7.10</TemplateID>
+    <ProjectType>Java</ProjectType>
+    <RequiredFrameworkVersion>2.0</RequiredFrameworkVersion>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>MinecraftMod</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <PromptForSaveOnCreation>true</PromptForSaveOnCreation>
+  </TemplateData>
+  <TemplateContent>
+    <Project File="ProjectTemplate.javaproj" ReplaceParameters="true">
+      <ProjectItem OpenInEditor="true" OpenOrder="1">Hello.txt</ProjectItem>
+      <ProjectItem OpenInEditor="false" ReplaceParameters="true">src\main\java\com\example\examplemod\ExampleMod.java</ProjectItem>
+      <ProjectItem OpenInEditor="true" ReplaceParameters="true" OpenOrder="2">src\main\resources\mcmod.info</ProjectItem>
+    </Project>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
+  </WizardExtension>
+  <WizardData>
+    <packages repository="extension" repositoryId="baf7c18c-9b42-43bc-9859-f6d3803e27c0">
+      <package id="com.microsoft.minecraftmod" version="0.5.4.0" />
+    </packages>
+    <packages repository="extension" repositoryId="Tvl.VisualStudio.Language.Java.1852bf6a-fde2-4268-9e3e-dce34312bfe3">
+      <package id="Tvl.Java" version="1.2.0" />
+    </packages>
+  </WizardData>
+</VSTemplate>

@@ -1,0 +1,335 @@
+// Copyright (c) Microsoft.  All Rights Reserved.  Licensed under the MIT License.  See LICENSE file in the project root for license information.
+
+package javapkg.Protocol;
+
+option java_package = "com.microsoft.javapkgsrv";
+option java_outer_classname = "Protocol";
+
+message FileIdentifier
+{
+	required int32 id = 1;
+}
+message TypeRootIdentifier
+{
+	required string handle = 1;
+}
+
+message Request
+{
+	enum RequestType
+	{
+		FileParse = 0;
+		OutlineFile = 1;
+		Bye = 2;
+		DisposeFile = 3;
+
+		Autocomplete = 4;
+		ParamHelp = 5;
+		ParamHelpPositionUpdate = 6;
+		FileParseMessages = 7;
+		QuickInfo = 8;
+		FindDefinition = 9;
+
+		OpenTypeRoot = 10;
+		DisposeTypeRoot = 11;
+		AddTypeRoot = 12;
+	}
+
+	required RequestType requestType = 1;
+
+	message FileParseRequest
+	{
+		required string fileParseContents = 1;
+		required string fileName = 2;
+	}
+	message OutlineFileRequest
+	{
+		required FileIdentifier fileIdentifier = 1;
+	}
+	message DisposeFileRequest
+	{
+		required FileIdentifier fileIdentifier = 1;
+	}
+	message DisposeTypeRootRequest
+	{
+		required TypeRootIdentifier typeRootIdentifier = 1;
+	}
+	message OpenTypeRootRequest
+	{
+		required string fileName = 1;
+	}
+	message AddTypeRootRequest
+	{
+		required TypeRootIdentifier typeRootIdentifier = 1;
+	}
+	message AutocompleteRequest
+	{
+		required string fileParseContents = 1;
+		required TypeRootIdentifier typeRootIdentifier = 2;
+		required int32 cursorPosition = 3;
+	}
+	message ParamHelpRequest
+	{
+		required string fileParseContents = 1;
+		required TypeRootIdentifier typeRootIdentifier = 2;
+		required int32 cursorPosition = 3;
+	}
+	message ParamHelpPositionUpdateRequest
+	{
+		required string fileParseContents = 1;
+		required int32 cursorPosition = 2;
+	}
+	message FileParseMessagesRequest
+	{
+		required FileIdentifier fileIdentifier = 1;
+	}
+	message QuickInfoRequest
+	{
+		required string fileParseContents = 1;
+		required TypeRootIdentifier typeRootIdentifier = 2;
+		required int32 cursorPosition = 3;
+	}
+	message FindDefinitionRequest
+	{
+		required string fileParseContents = 1;
+		required TypeRootIdentifier typeRootIdentifier = 2;
+		required int32 cursorPosition = 3;
+	}
+
+	optional FileParseRequest fileParseRequest = 2;
+	optional DisposeFileRequest disposeFileRequest = 3;
+	optional OutlineFileRequest outlineFileRequest = 4;
+	optional AutocompleteRequest autocompleteRequest = 5;
+	optional ParamHelpRequest paramHelpRequest = 6;
+	optional ParamHelpPositionUpdateRequest paramHelpPositionUpdateRequest = 7;
+	optional FileParseMessagesRequest fileParseMessagesRequest = 8;
+	optional QuickInfoRequest quickInfoRequest = 9;
+	optional FindDefinitionRequest findDefinitionRequest = 10;
+	optional DisposeTypeRootRequest disposeTypeRootRequest = 11;
+	optional OpenTypeRootRequest openTypeRootRequest = 12;
+	optional AddTypeRootRequest addTypeRootRequest = 13;
+}
+
+message Response
+{
+	enum ResponseType
+	{
+		FileParseStatus = 0;
+		OutlineResults = 1;
+		Bye = 2;
+		DisposeFile = 3;
+		Autocomplete = 4;
+		ParamHelp = 5;
+		ParamHelpPositionUpdate = 6;
+		FileParseMessages = 7;
+		QuickInfo = 8;
+		FindDefinition = 9;
+
+		DisposeTypeRoot = 10;
+		OpenTypeRoot = 11;
+		AddTypeRoot = 12;
+	}
+
+	required ResponseType responseType = 1;
+
+	message FileParseResponse
+	{
+		required bool status = 1;
+		optional FileIdentifier fileIdentifier = 2;
+		optional string errorMessage = 3;
+	}
+	message OutlineResultResponse
+	{
+		message Outline
+		{
+			required int32 startPosition = 1;
+			required int32 length = 2;
+			required string summaryText = 3;
+			required string hoverText = 4;
+		}
+
+		repeated Outline outline = 1;
+	}
+	message OpenTypeRootResponse
+	{
+		required bool status = 1;
+		optional TypeRootIdentifier typeRootIdentifier = 2;
+		optional string errorMessage = 3;
+	}
+	message AddTypeRootResponse
+	{
+		required bool status = 1;
+		optional TypeRootIdentifier typeRootIdentifier = 2;
+		optional string errorMessage = 3;
+	}
+	message AutocompleteResponse
+	{
+		message Completion
+		{
+			enum CompletionKind
+			{
+				ANONYMOUS_CLASS_DECLARATION  = 1;
+				FIELD_REF  = 2;
+				KEYWORD  = 3;
+				LABEL_REF  = 4;
+				LOCAL_VARIABLE_REF  = 5;
+				METHOD_REF  = 6;
+				METHOD_DECLARATION  = 7;
+				PACKAGE_REF  = 8;
+				TYPE_REF  = 9;
+				VARIABLE_DECLARATION  = 10;
+				POTENTIAL_METHOD_DECLARATION  = 11;
+				METHOD_NAME_REFERENCE  = 12;
+				ANNOTATION_ATTRIBUTE_REF  = 13;
+				JAVADOC_FIELD_REF  = 14;
+				JAVADOC_METHOD_REF  = 15;
+				JAVADOC_TYPE_REF  = 16;
+				JAVADOC_VALUE_REF  = 17;
+				JAVADOC_PARAM_REF  = 18;
+				JAVADOC_BLOCK_TAG  = 19;
+				JAVADOC_INLINE_TAG  = 20;
+				FIELD_IMPORT  = 21;
+				METHOD_IMPORT  = 22;
+				TYPE_IMPORT  = 23;
+				METHOD_REF_WITH_CASTED_RECEIVER  = 24;
+				FIELD_REF_WITH_CASTED_RECEIVER  = 25;
+				CONSTRUCTOR_INVOCATION  = 26;
+				ANONYMOUS_CLASS_CONSTRUCTOR_INVOCATION  = 27;
+			}
+
+			enum CompletionFlags
+			{	option allow_alias = true;
+
+				Default = 0;
+				Public = 0x0001;
+				Private = 0x0002;
+				Protected = 0x0004;
+				Static = 0x0008;
+				Final = 0x0010;
+				Synchronized = 0x0020;
+				Volatile = 0x0040;
+				Bridge = 0x0040;
+				Transient = 0x0080;
+				Varargs = 0x0080;
+				Native = 0x0100;
+				Interface = 0x0200;
+				Abstract = 0x0400;
+				Strictfp = 0x0800;
+				Synthetic = 0x1000;
+				Annotation = 0x2000;
+				Enum = 0x4000;
+				Mandated = 0x8000;
+				Super = 0x0020;
+				AnnotationDefault = 0x20000;
+				Deprecated = 0x100000;
+				DefaultMethod = 0x10000;
+			}
+
+			required CompletionKind kind = 1;
+			required string name = 2;
+			required bool isConstructor = 3;
+			required string completionText = 4;
+			required int64 flags = 6; // CompletionFlags bitmask
+			required int32 relevance = 7;
+			required int32 replaceStart = 8;
+			required int32 replaceEnd = 9;	
+			optional string declarationSignature = 10;
+			optional string signature = 11;
+		}
+
+		required bool status = 1;
+		optional string errorMessage = 2;
+		repeated Completion proposals = 3;
+	}
+	message ParamHelpResponse
+	{
+		message Parameter
+		{
+			required string name = 1;
+			optional string description = 3;
+		}
+		message Signature
+		{
+			required string name = 1;
+			required string returnValue = 2;
+			optional string description = 3;
+			repeated Parameter parameters = 4; 
+		}
+
+		required bool status = 1;
+		optional string errorMessage = 2;
+		optional int32 scopeStart = 3;
+		optional int32 scopeLength = 4;
+		optional int32 paramCount = 5;
+		repeated Signature signatures = 6;
+	}
+	message ParamHelpPositionUpdateResponse
+	{
+		required bool status = 1;
+		optional string errorMessage = 2;
+		optional int32 paramCount = 3;
+	}
+	message FileParseMessagesResponse
+	{
+		message Problem
+		{
+			enum ProblemType
+			{
+				Error = 1;
+				Warning = 2;
+				Message = 3;
+			}
+
+			required int32 id = 1;
+			required string message = 2;
+			optional string fileName = 3;
+			optional int32 scopeStart = 4;
+			optional int32 scopeEnd = 5;
+			optional int32 lineNumber = 6;
+			required ProblemType problemType = 7;
+			repeated string arguments = 8;
+		}
+
+		repeated Problem problems = 1;
+	}
+	message QuickInfoResponse
+	{
+		message JavaElement
+		{
+			required string definition = 1;
+			optional string javaDoc = 2;
+		}
+
+		repeated JavaElement elements = 1;
+	}
+	message FindDefinitionResponse
+	{
+		message JavaElement
+		{
+			required string definition = 1;
+			required bool hasSource = 2;
+			optional string filePath = 3;
+			optional int32 positionStart = 4;
+			optional int32 positionLength = 5;
+			optional string fileContents = 6;
+			optional string fileName = 7;
+			optional TypeRootIdentifier typeRootIdentifier = 8;
+		}
+
+		required bool status = 1;
+		optional string workspaceRootPath = 2;
+		optional string errorMessage = 3;
+		repeated JavaElement elements = 4;
+	}
+
+	optional FileParseResponse fileParseResponse = 2;
+	optional OutlineResultResponse outlineResultResponse = 3;
+	optional AutocompleteResponse autocompleteResponse = 4;
+	optional ParamHelpResponse paramHelpResponse = 5;
+	optional ParamHelpPositionUpdateResponse paramHelpPositionUpdateResponse = 6;
+	optional FileParseMessagesResponse fileParseMessagesResponse = 7;
+	optional QuickInfoResponse quickInfoResponse = 8;
+	optional FindDefinitionResponse findDefinitionResponse = 9;
+	optional OpenTypeRootResponse openTypeRootResponse = 10;
+	optional AddTypeRootResponse addTypeRootResponse = 11;
+}

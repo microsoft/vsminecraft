@@ -1,0 +1,16 @@
+[
+{
+  "modid": "$projectname$",
+  "name": "Example Mod",
+  "description": "Example placeholder mod.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["$registeredorganization$"],
+  "credits": "Copyright © $registeredorganization$ $year$",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

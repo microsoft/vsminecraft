@@ -1,0 +1,5 @@
+package DAL;
+
+message Database {
+   repeated group Order Orders = 1;
+}

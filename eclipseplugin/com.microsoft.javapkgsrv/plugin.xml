@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         id="javapkgsrv.start"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run
+               class="com.microsoft.javapkgsrv.Start">
+         </run>
+      </application>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="javapkgsrv.start"
+            name="Java Package Server Eclipse Product">
+         <property
+               name="appName"
+               value="Java Package Server Eclipse Product">
+         </property>
+      </product>
+   </extension>
+   <extension
+         id="javapkgbuild.runtask"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run
+               class="com.microsoft.javapkgbuild.RunTask">
+         </run>
+      </application>
+   </extension>
+
+</plugin>

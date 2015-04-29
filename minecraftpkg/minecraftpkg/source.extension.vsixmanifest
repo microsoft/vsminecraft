@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="baf7c18c-9b42-43bc-9859-f6d3803e27c0" Version="0.5.4" Language="en-US" Publisher="Microsoft" />
+    <DisplayName>Minecraft Mod Developer Pack</DisplayName>
+    <Description xml:space="preserve">Visual Studio extension to assist in developing Minecraft mods</Description>
+    <MoreInfo> http://aka.ms/vsminecraft</MoreInfo>
+    <License>EULA.rtf</License>
+    <Icon>images\favicon.png</Icon>
+  </Metadata>
+  <Installation InstalledByMsi="false">
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="12.0" />
+    <InstallationTarget Version="14.0" Id="Microsoft.VisualStudio.Pro" />
+  </Installation>
+  <Dependencies>
+    <!-- #Workaround for Win10 not recognizing NDP4.5
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" /> -->
+    <Dependency Id="Microsoft.VisualStudio.MPF.12.0" DisplayName="Visual Studio MPF 12.0" d:Source="Installed" Version="[12.0]" />
+    <Dependency d:Source="Project" d:ProjectName="javapkg" Version="[0.4,1.0)" d:InstallSource="Embed" d:VsixSubPath="Packages" Location="|javapkg;VSIXContainerProjectOutputGroup|" DisplayName="|javapkg;VSIXNameProjectOutputGroup|" Id="|javapkg;VSIXIdentifierProjectOutputGroup|" />
+    <Dependency d:Source="File" DisplayName="Java Language Support" Id="Tvl.VisualStudio.Language.Java.1852bf6a-fde2-4268-9e3e-dce34312bfe3" Version="[1.2.0,2.0.0.0)" d:InstallSource="Embed" d:VsixSubPath="Packages" Location="Packages\Tvl.VisualStudio.Language.Java.vsix" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="MinecraftModTemplate" d:TargetPath="|MinecraftModTemplate;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
+    <Asset Type="com.microsoft.minecraftmod.0.5.4.0.nupkg" d:Source="File" Path="Packages\com.microsoft.minecraftmod.0.5.4.0.nupkg" d:VsixSubPath="Packages" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="MekanismModSample" d:TargetPath="|MekanismModSample;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="Minecraft18ModTemplate" d:TargetPath="|Minecraft18ModTemplate;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
+  </Assets>
+</PackageManifest>

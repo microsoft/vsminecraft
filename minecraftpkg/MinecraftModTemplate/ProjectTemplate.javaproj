@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MinecraftVersion>1.7.10</MinecraftVersion>
+    <MinecraftForgeVersion>1.7.10-10.13.2.1291</MinecraftForgeVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugClient|AnyCPU' ">
+    <SourceRelease>Default</SourceRelease>
+    <TargetRelease>Default</TargetRelease>
+    <TargetVM>Hotspot</TargetVM>
+    <SourceEncoding />
+    <DebugSymbols>All</DebugSymbols>
+    <SpecificDebugSymbols />
+    <ShowWarnings>True</ShowWarnings>
+    <ShowAllWarnings>True</ShowAllWarnings>
+    <TreatWarningsAsErrors>None</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <OutputPath>bin\mods\</OutputPath>
+    <BuildArgs />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugServer|AnyCPU' ">
+    <SourceRelease>Default</SourceRelease>
+    <TargetRelease>Default</TargetRelease>
+    <TargetVM>Hotspot</TargetVM>
+    <SourceEncoding />
+    <DebugSymbols>All</DebugSymbols>
+    <SpecificDebugSymbols />
+    <ShowWarnings>True</ShowWarnings>
+    <ShowAllWarnings>True</ShowAllWarnings>
+    <TreatWarningsAsErrors>None</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <OutputPath>bin\mods\</OutputPath>
+    <BuildArgs />
+  </PropertyGroup>
+  <ItemGroup>
+    <SourceFolder Include="src\api\java" />
+    <SourceFolder Include="src\main\java\" />
+    <None Include="**\*.*" Exclude="bin\**\*.*;obj\**\*.*;out\**\*.*;*.user;*.javaproj;*.vspscc;*.vsscc;*.vssscc" />
+    <SourceFolder Include="src\main\resources\" />
+    <_CoreCreatePackageResourceInputs Include="src\main\resources\**\*.*">
+      <BaseOutputDirectory>src\main\resources\</BaseOutputDirectory>
+    </_CoreCreatePackageResourceInputs>
+    <_CoreCreatePackageResourceInputs Include="etc\core\*.*">
+      <BaseOutputDirectory>etc\core\</BaseOutputDirectory>
+    </_CoreCreatePackageResourceInputs>
+  </ItemGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

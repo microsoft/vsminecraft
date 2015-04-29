@@ -1,0 +1,28 @@
+﻿Before you start
+----------------------------------
+First thing, a provisioning build of your project will start. This will happen automatically after the project is 
+created. This build will take between 5 and 20 minutes depending on your Internet connection. The following builds 
+will only build your source code and will be much faster.
+
+Note: During the first time build, Java Intellisense and Browsing services will not be available. After the
+build completes, make sure you reopen any .java documents in the editor
+
+Running the mod
+----------------------------------
+The template created an example mod. To see it running, just press F5. 
+Happy coding!
+
+Launching the server
+-----------------------------------
+The template created a special configuration called "DebugServer" that launches the Minecraft server and loads your mod.
+To get the server running though, you will first need to accept the Minecraft EULA. Read eula.txt for more details (this 
+file gets created after the first failed server launch). 
+
+Updating jar references
+-----------------------------------
+If the build process complains about missing packages or you accidentally removed any jar references from your project
+you can "reprovision" your project by opening "Package Manager Console" under Tools > NuGet Package Manager menu and run 
+the following commands:
+
+PM> $project = get-project "ProjectName" # Make sure the project name matches
+PM> $dte.ExecuteCommand("CustomCommands.ProvisionMinecraftProject", $project.UniqueName)

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>com.microsoft.minecraftmod</id>
+        <version>0.5.4.0</version>
+        <title>Minecraft Modding support</title>
+        <authors>Microsoft</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Build scripts to assist with creating a Minecraft mod</description>
+        <language>en-US</language>
+    </metadata>
+    <files>
+        <file src="build\com.microsoft.minecraftmod.props" target="build\com.microsoft.minecraftmod.props" />
+        <file src="build\com.microsoft.minecraftmod.targets" target="build\com.microsoft.minecraftmod.targets" />
+        <file src="bin\$Configuration$\JavaPkgBuildTasks.dll" target="build" />
+        <file src="tools\*.*" target="tools" />
+    </files>
+</package>

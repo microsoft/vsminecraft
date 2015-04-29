@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="copy-protobuf-sources" basedir="." default="copy-protobuf">
+    <property name="src.dir" value="src" />
+    <property name="protobuf.dir" value="../../dependencies/protobuf-2.6.1/java/src/main/java" />
+    
+    <target name="copy-protobuf">
+        <copy todir="${src.dir}">
+            <fileset dir="${protobuf.dir}"/>
+        </copy>
+    </target>    
+    <target name="clean-protobuf">
+		<delete includeEmptyDirs="true">
+			<fileset dir="${src.dir}/com/google"/>
+		</delete>
+    </target>
+</project>

@@ -28,6 +28,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "javapkgsrv-proto", "javapkg
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "javapkg", "javapkg\javapkg\javapkg.csproj", "{E6FC8695-0C23-4E37-8BBC-65204AAAB3CC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{760004E7-ECD9-49E8-BB4D-BFC407C73939} = {760004E7-ECD9-49E8-BB4D-BFC407C73939}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JavaPkgBuildTasks", "minecraftpkg\JavaPkgBuildTasks\JavaPkgBuildTasks.csproj", "{0123B29C-3169-4918-A2D4-CB41A7382175}"
 EndProject

@@ -1,2 +1,2 @@
-# vsminecraft
-Visual Studio addin for developing Minecraft mods using Java.
+# Minecraft Mod Developer Pack for Visual Studio
+Visual Studio extension for developing Minecraft mods using Java.

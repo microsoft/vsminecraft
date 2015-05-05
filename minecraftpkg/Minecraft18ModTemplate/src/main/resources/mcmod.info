@@ -1,6 +1,6 @@
 [
 {
-  "modid": "examplemod",
+  "modid": "$projectname$",
   "name": "Example Mod",
   "description": "Example placeholder mod.",
   "version": "${version}",

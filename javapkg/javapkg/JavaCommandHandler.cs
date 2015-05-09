@@ -59,6 +59,7 @@ namespace javapkg
         }
         private static void LogCommand(LogCommandSource logCommandSource, Guid pguidCmdGroup, uint nCmdID)
         {
+#if DEBUG
             string commandName = nCmdID.ToString();
             string commandType = "unknown";
             //if (pguidCmdGroup.Equals(Microsoft.VisualStudio.VSConstants.CMDSETID.CSharpGroup_guid))
@@ -111,6 +112,7 @@ namespace javapkg
             //}
 
             Trace.WriteLine(String.Format("~~~* {0}: {1}{2}", logCommandSource.ToString(), commandType, commandName));
+#endif
         }
         public static void QueryStatus(Guid pguidCmdGroup, uint nCmdID)
         {

@@ -21,4 +21,4 @@ This code is released under the [MIT license](https://github.com/Microsoft/vsmin
 As we start collecting bugs and feature suggestions, we'll start shaping a clearer roadmap for this extension
 
 ### Building the source
-_Coming soon_
+[How to build](HowToBuild.md)

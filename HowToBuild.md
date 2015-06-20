@@ -22,6 +22,6 @@ Creating the eclipse product:
 
   1. Make sure that the vsminecraft.sln is not loaded in any VS session
   2. Copy the eclipse subfolder from the Destination Directory created by Eclipse's export step into [vsminecraft\javapkg\javapkg](https://github.com/Microsoft/vsminecraft/tree/master/javapkg/javapkg) folder
-  3. Load and build vsminecraft\vsminecraft.sln solution in VS
+  3. Load and build vsminecraft\minecraftpkg.sln solution in VS
   4. The VSIX produced will be under vsminecraft\minecraftpkg\minecraftpkg\bin
 

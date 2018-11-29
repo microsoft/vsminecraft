@@ -385,7 +385,7 @@ class LIBPROTOBUF_EXPORT Reflection {
   virtual void ClearField(Message* message,
                           const FieldDescriptor* field) const = 0;
 
-  // Check if the oneof is set. Returns ture if any field in oneof
+  // Check if the oneof is set. Returns true if any field in oneof
   // is set, false otherwise.
   // TODO(jieluo) - make it pure virtual after updating all
   // the subclasses.

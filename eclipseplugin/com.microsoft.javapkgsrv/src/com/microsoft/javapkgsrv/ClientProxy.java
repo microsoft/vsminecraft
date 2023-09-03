@@ -30,27 +30,27 @@ import com.microsoft.javapkgsrv.Protocol.Response.ResponseType;
 import com.microsoft.javapkgsrv.Protocol.TypeRootIdentifier;
 
 public class ClientProxy {
-	private PipeChannel Pipe = null;
-	private JavaParser Parser = new JavaParser();
+	private PipeChannel pipe = null;
+	private JavaParser parser = new JavaParser();
 	public ClientProxy()
 	{
-		Pipe = new PipeChannel();
+		pipe = new PipeChannel();
 	}
 	public ClientProxy(String pipeName)
 	{
-		Pipe = new PipeChannel(pipeName);
+		pipe = new PipeChannel(pipeName);
 	}
 	public void Run() throws IOException, JavaModelException
 	{
-		Pipe.Init();
-		Parser.Init();
+		pipe.Init();
+		parser.Init();
 		while (true)
 		{
 			try
 			{
-				Protocol.Request request = Pipe.ReadMessage();
+				Protocol.Request request = pipe.ReadMessage();
 				Protocol.Response response = ProcessRequest(request);
-				Pipe.WriteMessage(response);
+				pipe.WriteMessage(response);
 
 				if (request.getRequestType().equals(RequestType.Bye))
 					break; // return to allow the process to exit
@@ -69,7 +69,7 @@ public class ClientProxy {
 			try
 			{
 				System.out.print("Parsing " + request.getFileParseRequest().getFileName());
-				Integer result = Parser.ProcessParseRequest(
+				Integer result = parser.ProcessParseRequest(
 						request.getFileParseRequest().getFileParseContents(), 
 						request.getFileParseRequest().getFileName());
 				System.out.println(" id = " + result.toString());
@@ -100,7 +100,7 @@ public class ClientProxy {
 		{
 			Integer fileId = request.getDisposeFileRequest().getFileIdentifier().getId();			
 			System.out.println("Remove AST for id = " + fileId);
-			Parser.ProcessDisposeFileRequest(fileId);
+			parser.ProcessDisposeFileRequest(fileId);
 			
 			return Protocol.Response.newBuilder()
 					.setResponseType(ResponseType.DisposeFile)
@@ -110,7 +110,7 @@ public class ClientProxy {
 		{
 			Integer fileId = request.getOutlineFileRequest().getFileIdentifier().getId();
 			System.out.println("Creating outline for id = " + fileId);
-			List<Outline> outline = Parser.ProcessOutlineRequest(fileId);
+			List<Outline> outline = parser.ProcessOutlineRequest(fileId);
 			
 			return Protocol.Response.newBuilder()
 					.setResponseType(ResponseType.OutlineResults)
@@ -123,7 +123,7 @@ public class ClientProxy {
 		{
 			Integer fileId = request.getFileParseMessagesRequest().getFileIdentifier().getId();
 			System.out.println("Sending squiggles for id = " + fileId);
-			List<Problem> problems = Parser.ProcessFileParseMessagesRequest(fileId);
+			List<Problem> problems = parser.ProcessFileParseMessagesRequest(fileId);
 			
 			return Protocol.Response.newBuilder()
 					.setResponseType(ResponseType.FileParseMessages)
@@ -137,7 +137,7 @@ public class ClientProxy {
 			try
 			{
 				System.out.println("Autocomplete request for " + request.getAutocompleteRequest().getTypeRootIdentifier().getHandle());
-				List<Completion> proposals = Parser.ProcessAutocompleteRequest(
+				List<Completion> proposals = parser.ProcessAutocompleteRequest(
 						request.getAutocompleteRequest().getFileParseContents(),
 						request.getAutocompleteRequest().getTypeRootIdentifier().getHandle(),
 						request.getAutocompleteRequest().getCursorPosition());
@@ -167,10 +167,10 @@ public class ClientProxy {
 			try
 			{
 				System.out.println("ParamHelp request for " + request.getParamHelpRequest().getTypeRootIdentifier().getHandle());
-				JavaParamHelpMatcher.ParamRegion region = Parser.getScope(
+				JavaParamHelpMatcher.ParamRegion region = parser.getScope(
 						request.getParamHelpRequest().getFileParseContents(), 
 						request.getParamHelpRequest().getCursorPosition());
-				List<Signature> signatures = Parser.ProcessParamHelpRequest(
+				List<Signature> signatures = parser.ProcessParamHelpRequest(
 						request.getParamHelpRequest().getFileParseContents(),
 						request.getParamHelpRequest().getTypeRootIdentifier().getHandle(),
 						region.region.getOffset() + 1); // Request Autocomplete right after the open brace
@@ -203,7 +203,7 @@ public class ClientProxy {
 			try
 			{
 				System.out.println("ParamHelp PositionUpdate request for " + request.getParamHelpPositionUpdateRequest().getFileParseContents());
-				JavaParamHelpMatcher.ParamRegion region = Parser.updateScope(
+				JavaParamHelpMatcher.ParamRegion region = parser.updateScope(
 						request.getParamHelpPositionUpdateRequest().getFileParseContents(),
 						request.getParamHelpPositionUpdateRequest().getCursorPosition());
 				if (region == null)
@@ -233,7 +233,7 @@ public class ClientProxy {
 			try
 			{
 				System.out.println("QuickInfo request for " + request.getQuickInfoRequest().getTypeRootIdentifier().getHandle());
-				List<JavaElement> elements = Parser.ProcessQuickInfoRequest(
+				List<JavaElement> elements = parser.ProcessQuickInfoRequest(
 						request.getQuickInfoRequest().getFileParseContents(),
 						request.getQuickInfoRequest().getTypeRootIdentifier().getHandle(),
 						request.getQuickInfoRequest().getCursorPosition());
@@ -260,7 +260,7 @@ public class ClientProxy {
 			try
 			{
 				System.out.println("FindDefinition request for " + request.getFindDefinitionRequest().getTypeRootIdentifier().getHandle());
-				List<FindDefinitionResponse.JavaElement> elements = Parser.ProcessFindDefinintionRequest(
+				List<FindDefinitionResponse.JavaElement> elements = parser.ProcessFindDefinintionRequest(
 						request.getFindDefinitionRequest().getFileParseContents(),
 						request.getFindDefinitionRequest().getTypeRootIdentifier().getHandle(),
 						request.getFindDefinitionRequest().getCursorPosition());
@@ -269,7 +269,7 @@ public class ClientProxy {
 						.setResponseType(ResponseType.FindDefinition)
 						.setFindDefinitionResponse(FindDefinitionResponse.newBuilder()
 								.setStatus(true)
-								.setWorkspaceRootPath(Parser.WorkspaceRoot.getLocation().toString())
+								.setWorkspaceRootPath(parser.WorkspaceRoot.getLocation().toString())
 								.addAllElements(elements)
 								.build())
 						.build();
@@ -281,7 +281,7 @@ public class ClientProxy {
 						.setResponseType(ResponseType.FindDefinition)
 						.setFindDefinitionResponse(FindDefinitionResponse.newBuilder()
 								.setStatus(false)
-								.setWorkspaceRootPath(Parser.WorkspaceRoot.getLocation().toString())
+								.setWorkspaceRootPath(parser.WorkspaceRoot.getLocation().toString())
 								.setErrorMessage(e.getMessage() != null ? e.getMessage() : e.toString())
 								.build())
 						.build();				
@@ -292,7 +292,7 @@ public class ClientProxy {
 			try
 			{
 				System.out.println("OpenTypeRoot request for " + request.getOpenTypeRootRequest().getFileName());
-				String typeRootHandle = Parser.ProcessOpenTypeRequest(request.getOpenTypeRootRequest().getFileName());
+				String typeRootHandle = parser.ProcessOpenTypeRequest(request.getOpenTypeRootRequest().getFileName());
 				
 				return Protocol.Response.newBuilder()
 						.setResponseType(ResponseType.OpenTypeRoot)
@@ -320,7 +320,7 @@ public class ClientProxy {
 		{
 			String handle = request.getDisposeTypeRootRequest().getTypeRootIdentifier().getHandle();			
 			System.out.println("Remove typeroot for handle = " + handle);
-			Parser.ProcessDisposeTypeRoot(handle);
+			parser.ProcessDisposeTypeRoot(handle);
 			
 			return Protocol.Response.newBuilder()
 					.setResponseType(ResponseType.DisposeTypeRoot)
@@ -331,7 +331,7 @@ public class ClientProxy {
 			try
 			{
 				System.out.println("AddTypeRoot request for " + request.getAddTypeRootRequest().getTypeRootIdentifier().getHandle());
-				String typeRootHandle = Parser.ProcessAddTypeRequest(request.getAddTypeRootRequest().getTypeRootIdentifier().getHandle());
+				String typeRootHandle = parser.ProcessAddTypeRequest(request.getAddTypeRootRequest().getTypeRootIdentifier().getHandle());
 				
 				return Protocol.Response.newBuilder()
 						.setResponseType(ResponseType.AddTypeRoot)
